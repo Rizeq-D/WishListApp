@@ -9,17 +9,17 @@ class WishRepository(private val wishDao: WishDao) {
         wishDao.addWishDao(wish)
     }
 
-    fun getWishes() : Flow<List<Wish>> = wishDao.getAllWishesDao()
+    fun getWishesRepo() : Flow<List<Wish>> = wishDao.getAllWishesDao()
 
-    fun getWishById(id : Long) : Flow<Wish> {
+    fun getWishByIdRepo(id : Long) : Flow<Wish> {
         return wishDao.getWishByIdDao(id)
     }
 
-    suspend fun updateWish(wish: Wish) {
+    suspend fun updateWishRepo(wish: Wish) {
         wishDao.updateWishDao(wish)
     }
 
-    suspend fun deleteWish(wish: Wish) {
+    suspend fun deleteWishRepo(wish: Wish) {
         wishDao.deleteWishDao(wish)
     }
 }
