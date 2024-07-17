@@ -12,17 +12,17 @@ import kotlinx.coroutines.flow.Flow
 abstract class WishDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun addWish(wishEntity : Wish)
+    abstract suspend fun addWishDao(wishEntity : Wish)
 
     @Query("SELECT * FROM `wish-table`")
-    abstract fun getAllWishes() : Flow<List<Wish>>
+    abstract fun getAllWishesDao() : Flow<List<Wish>>
 
     @Update
-    abstract suspend fun updateAWish(wishEntity : Wish)
+    abstract suspend fun updateWishDao(wishEntity : Wish)
 
     @Delete
-    abstract suspend fun deleteAWish(wishEntity : Wish)
+    abstract suspend fun deleteWishDao(wishEntity : Wish)
 
     @Query("SELECT * FROM `wish-table` WHERE id =:id")
-    abstract fun getOneWishById(id : Long) : Flow<Wish>
+    abstract fun getWishByIdDao(id : Long) : Flow<Wish>
 }
