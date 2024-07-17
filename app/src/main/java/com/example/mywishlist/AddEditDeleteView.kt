@@ -12,8 +12,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,14 +30,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.mywishlist.data.Wish
+import kotlinx.coroutines.launch
+
 
 @Composable
 fun AddEditDeleteView(id : Long, viewModel: WishViewModel, navController : NavController) {
 
-    Scaffold(topBar = {AppBarView(title =
+    val snackMessage = remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
+    val snackBarHostState = remember { SnackbarHostState() }
+
+
+
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackBarHostState) },
+        topBar = {AppBarView(title =
     if (id != 0L) stringResource(id = R.string.update_wish)
     else stringResource(id = R.string.add_wish))
-    {navController.navigateUp()}},
+    {navController.navigateUp()} },
+
 
         ) {
 
@@ -61,12 +79,25 @@ fun AddEditDeleteView(id : Long, viewModel: WishViewModel, navController : NavCo
             Button(onClick = {
                 if (viewModel.wishTitleState.isNotEmpty() &&
                     viewModel.wishDescriptionState.isNotEmpty()){
-                    // we will do something here
+                    if (id != 0L) {
+                        //viewModel.updateWishVM()
+                    }else{
+                        viewModel.addWishVM(
+                            Wish(title = viewModel.wishTitleState.trim(),
+                                description = viewModel.wishDescriptionState.trim()
+                            )
+                        )
+                        snackMessage.value = "The wish has been created"
+                    }
+
                 }else{
-                    // we will add something here too
+                    snackMessage.value = "Enter the fields to create a wish"
                 }
-            }
-            ) {
+                scope.launch {
+                    snackBarHostState.showSnackbar(snackMessage.value)
+                    navController.navigateUp()
+                }
+            }) {
                 Text(
                     text = if (id != 0L) stringResource(id = R.string.update_wish)
                     else stringResource(id = R.string.add_wish),

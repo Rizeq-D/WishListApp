@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.ui.tooling.preview)
     kapt(libs.androidx.room.compiler)
 
+    implementation(libs.material3)
+    implementation(libs.androidx.material3.adaptive.navigation.suite)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
