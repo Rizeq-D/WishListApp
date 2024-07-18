@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.mywishlist"
-        minSdk = 24
+        minSdk = 25
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -57,8 +57,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.ui)
-    //implementation(libs.androidx.material)
     implementation(libs.ui.tooling.preview)
+    implementation(libs.androidx.compose.material)
     kapt(libs.androidx.room.compiler)
 
     implementation(libs.material3)
