@@ -86,7 +86,13 @@ fun AddEditDeleteView(id : Long, viewModel: WishViewModel, navController : NavCo
                 if (viewModel.wishTitleState.isNotEmpty() &&
                     viewModel.wishDescriptionState.isNotEmpty()){
                     if (id != 0L) {
-                        //viewModel.updateWishVM()
+                        viewModel.updateWishVM(
+                            Wish(id = id,
+                                title = viewModel.wishTitleState.trim(),
+                                description = viewModel.wishDescriptionState.trim()
+                            )
+                        )
+                        snackMessage.value = "The wish has been updated"
                     }else{
                         viewModel.addWishVM(
                             Wish(title = viewModel.wishTitleState.trim(),
