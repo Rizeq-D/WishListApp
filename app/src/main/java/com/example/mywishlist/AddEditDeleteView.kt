@@ -16,6 +16,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -40,8 +41,14 @@ fun AddEditDeleteView(id : Long, viewModel: WishViewModel, navController : NavCo
     val snackMessage = remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState() }
-
-
+    if (id != 0L) {
+        val wish = viewModel.getWishByIdVM(id).collectAsState(initial = Wish(0L, "", ""))
+        viewModel.wishTitleState = wish.value.title
+        viewModel.wishDescriptionState = wish.value.description
+    }else{
+        viewModel.wishTitleState = ""
+        viewModel.wishDescriptionState = ""
+    }
 
     Scaffold(
         snackbarHost = {
@@ -50,7 +57,6 @@ fun AddEditDeleteView(id : Long, viewModel: WishViewModel, navController : NavCo
     if (id != 0L) stringResource(id = R.string.update_wish)
     else stringResource(id = R.string.add_wish))
     {navController.navigateUp()} },
-
 
         ) {
 
